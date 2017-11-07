@@ -146,6 +146,17 @@
                     </div>
                     {% endfor %} </div>
                 </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-customer"><span data-toggle="tooltip" title="{{ help_customer }}">{{ entry_customer }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="customer" value="" placeholder="{{ entry_customer }}" id="input-customer" class="form-control" />
+                  <div id="coupon-customer" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_customer in coupon_customer %}
+                    <div id="coupon-customer{{ coupon_customer.customer_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_customer.name }}
+                      <input type="hidden" name="coupon_customer[]" value="{{ coupon_customer.customer_id }}" />
+                    </div>
+                    {% endfor %} </div>
+                </div>
+              </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-date-start">{{ entry_date_start }}</label>
@@ -267,6 +278,36 @@ $('input[name=\'category\']').autocomplete({
 });
 
 $('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+
+
+// Customer
+$('input[name=\'customer\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=customer/customer/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['customer_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'customer\']').val('');
+		
+		$('#coupon-customer' + item['value']).remove();
+		
+		$('#coupon-customer').append('<div id="coupon-customer' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_customer[]" value="' + item['value'] + '" /></div>');
+	}	
+});
+
+$('#coupon-customer').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 

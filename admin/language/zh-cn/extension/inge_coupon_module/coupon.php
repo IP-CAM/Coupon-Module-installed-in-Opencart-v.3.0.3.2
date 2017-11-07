@@ -34,6 +34,7 @@ $_['entry_shipping']      = '免运费';
 $_['entry_total']         = '总金额';
 $_['entry_category']      = '目录';
 $_['entry_product']       = '商品';
+$_['entry_customer']       = '客户';
 $_['entry_date_start']    = '开始日期';
 $_['entry_date_end']      = '结束日期';
 $_['entry_uses_total']    = '优惠券使用次数';
@@ -47,6 +48,7 @@ $_['help_logged']         = '客户必须先登录才能使用优惠券。';
 $_['help_total']          = '在订单达到此金额以前不能使用优惠券。';
 $_['help_category']       = '选择在所选类别的所有商品。';
 $_['help_product']        = '选择优惠券适用于的具体商品。 不选择则适用所有商品。';
+$_['help_customer']        = '选择优惠券发放的具体客户。 不选择则所有客户可用，但是并不显示在账户里。';
 $_['help_uses_total']     = '优惠券被任何客户使用的最大次数，留空不限制';
 $_['help_uses_customer']  = '优惠券被任何单客户使用的最大次数，留空不限制';
 
