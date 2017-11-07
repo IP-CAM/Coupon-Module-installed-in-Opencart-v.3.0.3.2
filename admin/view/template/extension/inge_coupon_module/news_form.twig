@@ -1,275 +1,290 @@
-{{header}}{{column_left}}
+{{ header }}{{ column_left }}
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
-        <button type="submit" form="form-category" data-toggle="tooltip" title="{{button_save}}" class="btn btn-primary"><i class="fa fa-save"></i></button>
-        <a href="{{cancel}}" data-toggle="tooltip" title="{{button_cancel}}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
-      <h1>{{heading_title}}</h1>
+        <button type="submit" form="form-coupon" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+        <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+      <h1>{{ heading_title }}</h1>
       <ul class="breadcrumb">
         {% for breadcrumb in breadcrumbs %}
-        <li><a href="{{breadcrumb.href}}">{{breadcrumb.text}}</a></li>
+        <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
         {% endfor %}
       </ul>
     </div>
   </div>
-  <div class="container-fluid">
-    {% if error_warning %}
-    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{error_warning}}
+  <div class="container-fluid"> {% if error_warning %}
+    <div class="alert alert-danger alert-dismissible"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{text_form}}</h3>
+        <h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_form }}</h3>
       </div>
       <div class="panel-body">
-        <form action="{{action}}" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
+        <form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#tab-general" data-toggle="tab">{{tab_general}}</a></li>
+            <li class="active"><a href="#tab-general" data-toggle="tab">{{ tab_general }}</a></li>
+            {% if coupon_id %}
+            <li><a href="#tab-history" data-toggle="tab">{{ tab_history }}</a></li>
+            {% endif %}
           </ul>
           <div class="tab-content">
-            <div class="tab-pane active in" id="tab-general">
-              <ul class="nav nav-tabs" id="language">
-                {% for language in languages %}
-                <li><a href="#language{{language.language_id}}" data-toggle="tab"><img src="{{language.flag}}" title="{{language.name}}" /> {{language.name}}</a></li>
-                {% endfor %}
-              </ul>
-              <div class="tab-content">
-                {% for language in languages %}
-                <div class="tab-pane" id="language{{language.language_id}}">
-                  <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-name{{language.language_id}}">{{entry_title}}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="news_description[{{language.language_id}}][post_title]" value="{{ news_description[language.language_id] ? news_description[language.language_id].post_title : '' }}" placeholder="{{entry_title}}" id="input-name{{language.language_id}}" class="form-control" />
-                      {% if error_name[language.language_id] %}
-                      <div class="text-danger">{{error_name[language.language_id]}}</div>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-name{{language.language_id}}">{{entry_excerpt}}</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="news_description[{{language.language_id}}][post_excerpt]" value="{{ news_description[language.language_id] ? news_description[language.language_id].post_excerpt : '' }}" placeholder="{{entry_excerpt}}" id="input-name{{language.language_id}}" class="form-control" />
-                        {% if error_name[language.language_id] %}
-                          <div class="text-danger">{{error_name[language.language_id]}}</div>
-                        {% endif %}
-                    </div>
-                  </div>
-                  <div class="form-group required">
-                    <label class="col-sm-2 control-label" for="input-description{{language.language_id}}">{{entry_content}}</label>
-                    <div class="col-sm-10">
-                      <textarea name="news_description[{{language.language_id}}][post_content]" placeholder="{{entry_content}}" class="d_visual_designer form-control summernote" id="input-description{{language.language_id}}" data-toggle="summernote" >{{news_description[language.language_id] ? news_description[language.language_id].post_content : ''}}</textarea>
-                    </div>
-                  </div>
-                  <div class="form-group" hidden>
-                    <label class="col-sm-2 control-label" for="input-description-id{{language.language_id}}">{{entry_description_id}}</label>
-                    <div class="col-sm-10">
-                      <input name="news_description[{{language.language_id}}][news_description_id]" placeholder="{{entry_description_id}}" id="input-description-id{{language.language_id}}" value="{{news_description[language.language_id] ? news_description[language.language_id].news_description_id : ''}}">
-                    </div>
-                  </div>
-                  <div class="form-group" hidden>
-                    <label class="col-sm-2 control-label" for="input-description-id{{language.language_id}}">{{entry_news_id}}</label>
-                    <div class="col-sm-10">
-                      <input name="news_description[{{language.language_id}}][news_id]" placeholder="{{entry_news_id}}" id="input-news-id{{language.language_id}}" value="{{news_description[language.language_id] ? news_description[language.language_id].news_id : ''}}">
-                    </div>
-                  </div>
-                  {#<div class="form-group">#}
-                    {#<label class="col-sm-2 control-label" for="input-meta-keyword{{language.language_id}}">{{entry_meta_keyword}}</label>#}
-                    {#<div class="col-sm-10">#}
-                      {#<textarea name="news_description[{{language.language_id}}][meta_keyword]" rows="5" placeholder="{{entry_meta_keyword}}" id="input-meta-keyword{{language.language_id}}" class="form-control">{{news_description[language.language_id] ? news_description[language.language_id].meta_keyword : ''}}</textarea>#}
-                    {#</div>#}
-                  {#</div>#}
-                </div>
-                {% endfor %}
-                {% if param == 'add' %}
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-add-parent-id">父分类</label>
-                  <div class="col-sm-10">
-                    <select name="parent_id" id="input-add-parent-id" class="form-control">
-                        <option value="0">{{ text_top_category }}</option>
-                        {% for parent_category in parent_categories %}
-                          <option value="{{ parent_category.neinge_coupon_id }}">{{ parent_category.deep }}{{parent_category.title}}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                {% endif %}
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_status}}</label>
-                  <div class="col-sm-10">
-                    <select name="post_status" id="input-status" class="form-control">
-                        {% if news_info.post_status %}
-                          <option value="1" selected="selected">{{text_enabled}}</option>
-                          <option value="0">{{text_disabled}}</option>
-                        {% else %}
-                          <option value="1">{{text_enabled}}</option>
-                          <option value="0" selected="selected">{{text_disabled}}</option>
-                        {% endif %}
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_comment_status}}</label>
-                  <div class="col-sm-10">
-                    <select name="comment_status" id="input-status" class="form-control">
-                        {% if news_info.comment_status %}
-                          <option value="1" selected="selected">{{text_enabled}}</option>
-                          <option value="0">{{text_disabled}}</option>
-                        {% else %}
-                          <option value="1">{{text_enabled}}</option>
-                          <option value="0" selected="selected">{{text_disabled}}</option>
-                        {% endif %}
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_top_status}}</label>
-                  <div class="col-sm-10">
-                    <select name="is_top" id="input-status" class="form-control">
-                        {% if news_info.is_top %}
-                          <option value="1" selected="selected">{{text_enabled}}</option>
-                          <option value="0">{{text_disabled}}</option>
-                        {% else %}
-                          <option value="1">{{text_enabled}}</option>
-                          <option value="0" selected="selected">{{text_disabled}}</option>
-                        {% endif %}
-                    </select>
-                  </div>
-                </div>
-                {#<div class="form-group">#}
-                  {#<label class="col-sm-2 control-label" for="input-status">{{entry_delete_status}}</label>#}
-                  {#<div class="col-sm-10">#}
-                    {#<select name="is_delete" id="input-status" class="form-control">#}
-                        {#{% if news_info.is_delete == 1%}#}
-                          {#<option value="1" selected="selected">{{text_delete_back}}</option>#}
-                          {#<option value="0">{{text_delete_en}}</option>#}
-                        {#{% else %}#}
-                          {#<option value="1">{{text_delete_back}}</option>#}
-                          {#<option value="0" selected="selected">{{text_delete_en}}</option>#}
-                        {#{% endif %}#}
-                    {#</select>#}
-                  {#</div>#}
-                {#</div>#}
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_2_category}}</label>
-                  <div class="col-sm-10">
-                    <select name="category_id" id="input-is-category-id" class="form-control">
-                        {% for news_category in news_categories %}
-                          <option value="{{ news_category.news_category_id }}" {% if news_category.news_category_id == news_info.category_id %}selected="selected"{% endif %}>{{ news_category.deep }}{{ news_category.title }}</option>
-                        {% endfor %}
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_recommended}}</label>
-                  <div class="col-sm-10">
-                    <select name="recommended" id="input-is-nav" class="form-control">
-                        {% if news_info.recommended %}
-                          <option value="1" selected="selected">{{text_enabled}}</option>
-                          <option value="0">{{text_disabled}}</option>
-                        {% else %}
-                          <option value="1">{{text_enabled}}</option>
-                          <option value="0" selected="selected">{{text_disabled}}</option>
-                        {% endif %}
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_post_hits}}</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="text" name="post_hits" value="{{ news_info.post_hits }}">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-status">{{entry_post_like}}</label>
-                  <div class="col-sm-10">
-                    <input class="form-control" type="text" name="post_like" value="{{ news_info.post_like }}">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="tab-data">
-              {% if param == '' %}
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-parent">{{entry_parent}}</label>
+            <div class="tab-pane active" id="tab-general">
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-name">{{ entry_name }}</label>
                 <div class="col-sm-10">
-                  <input type="hidden" name="parent_id" value="{{parent_id}}" />
+                  <input type="text" name="name" value="{{ name }}" placeholder="{{ entry_name }}" id="input-name" class="form-control" />
+                  {% if error_name %}
+                  <div class="text-danger">{{ error_name }}</div>
+                  {% endif %} </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-code"><span data-toggle="tooltip" title="{{ help_code }}">{{ entry_code }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="code" value="{{ code }}" placeholder="{{ entry_code }}" id="input-code" class="form-control" />
+                  {% if error_code %}
+                  <div class="text-danger">{{ error_code }}</div>
+                  {% endif %} </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-type"><span data-toggle="tooltip" title="{{ help_type }}">{{ entry_type }}</span></label>
+                <div class="col-sm-10">
+                  <select name="type" id="input-type" class="form-control">
+                    
+                    {% if type == 'P' %}
+                    
+                    <option value="P" selected="selected">{{ text_percent }}</option>
+                    
+                    {% else %}
+                    
+                    <option value="P">{{ text_percent }}</option>
+                    
+                    {% endif %}
+                    {% if type == 'F' %}
+                    
+                    <option value="F" selected="selected">{{ text_amount }}</option>
+                    
+                    {% else %}
+                    
+                    <option value="F">{{ text_amount }}</option>
+                    
+                    {% endif %}
+                  
+                  </select>
                 </div>
               </div>
-              {% endif %}
-              {#<div class="form-group">#}
-                {#<label class="col-sm-2 control-label">{{entry_image}}</label>#}
-                {#<div class="col-sm-10"><a href="" id="thumb-image" data-toggle="image" class="img-thumbnail"><img src="{{thumb}}" alt="" title="" data-placeholder="{{placeholder}}" /></a>#}
-                  {#<input type="hidden" name="image" value="{{image}}" id="input-image" />#}
-                {#</div>#}
-              {#</div>#}
-              {#<div class="form-group">#}
-                {#<label class="col-sm-2 control-label" for="input-sort-order">{{entry_sort_order}}</label>#}
-                {#<div class="col-sm-10">#}
-                  {#<input type="text" name="sort_order" value="{{sort_order}}" placeholder="{{entry_sort_order}}" id="input-sort-order" class="form-control" />#}
-                {#</div>#}
-              {#</div>#}
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-discount">{{ entry_discount }}</label>
+                <div class="col-sm-10">
+                  <input type="text" name="discount" value="{{ discount }}" placeholder="{{ entry_discount }}" id="input-discount" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-total"><span data-toggle="tooltip" title="{{ help_total }}">{{ entry_total }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="total" value="{{ total }}" placeholder="{{ entry_total }}" id="input-total" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="{{ help_logged }}">{{ entry_logged }}</span></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"> {% if logged %}
+                    <input type="radio" name="logged" value="1" checked="checked" />
+                    {{ text_yes }}
+                    {% else %}
+                    <input type="radio" name="logged" value="1" />
+                    {{ text_yes }}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not logged %}
+                    <input type="radio" name="logged" value="0" checked="checked" />
+                    {{ text_no }}
+                    {% else %}
+                    <input type="radio" name="logged" value="0" />
+                    {{ text_no }}
+                    {% endif %} </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">{{ entry_shipping }}</label>
+                <div class="col-sm-10">
+                  <label class="radio-inline"> {% if shipping %}
+                    <input type="radio" name="shipping" value="1" checked="checked" />
+                    {{ text_yes }}
+                    {% else %}
+                    <input type="radio" name="shipping" value="1" />
+                    {{ text_yes }}
+                    {% endif %} </label>
+                  <label class="radio-inline"> {% if not shipping %}
+                    <input type="radio" name="shipping" value="0" checked="checked" />
+                    {{ text_no }}
+                    {% else %}
+                    <input type="radio" name="shipping" value="0" />
+                    {{ text_no }}
+                    {% endif %} </label>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-product"><span data-toggle="tooltip" title="{{ help_product }}">{{ entry_product }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="product" value="" placeholder="{{ entry_product }}" id="input-product" class="form-control" />
+                  <div id="coupon-product" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_product in coupon_product %}
+                    <div id="coupon-product{{ coupon_product.product_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_product.name }}
+                      <input type="hidden" name="coupon_product[]" value="{{ coupon_product.product_id }}" />
+                    </div>
+                    {% endfor %} </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-category"><span data-toggle="tooltip" title="{{ help_category }}">{{ entry_category }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="category" value="" placeholder="{{ entry_category }}" id="input-category" class="form-control" />
+                  <div id="coupon-category" class="well well-sm" style="height: 150px; overflow: auto;"> {% for coupon_category in coupon_category %}
+                    <div id="coupon-category{{ coupon_category.category_id }}"><i class="fa fa-minus-circle"></i> {{ coupon_category.name }}
+                      <input type="hidden" name="coupon_category[]" value="{{ coupon_category.category_id }}" />
+                    </div>
+                    {% endfor %} </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-date-start">{{ entry_date_start }}</label>
+                <div class="col-sm-3">
+                  <div class="input-group date">
+                    <input type="text" name="date_start" value="{{ date_start }}" placeholder="{{ entry_date_start }}" data-date-format="YYYY-MM-DD" id="input-date-start" class="form-control" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-date-end">{{ entry_date_end }}</label>
+                <div class="col-sm-3">
+                  <div class="input-group date">
+                    <input type="text" name="date_end" value="{{ date_end }}" placeholder="{{ entry_date_end }}" data-date-format="YYYY-MM-DD" id="input-date-end" class="form-control" />
+                    <span class="input-group-btn">
+                    <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                    </span></div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-uses-total"><span data-toggle="tooltip" title="{{ help_uses_total }}">{{ entry_uses_total }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="uses_total" value="{{ uses_total }}" placeholder="{{ entry_uses_total }}" id="input-uses-total" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-uses-customer"><span data-toggle="tooltip" title="{{ help_uses_customer }}">{{ entry_uses_customer }}</span></label>
+                <div class="col-sm-10">
+                  <input type="text" name="uses_customer" value="{{ uses_customer }}" placeholder="{{ entry_uses_customer }}" id="input-uses-customer" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+                <div class="col-sm-10">
+                  <select name="status" id="input-status" class="form-control">
+                    
+                    {% if status %}
+                    
+                    <option value="1" selected="selected">{{ text_enabled }}</option>
+                    <option value="0">{{ text_disabled }}</option>
+                    
+                    {% else %}
+                    
+                    <option value="1">{{ text_enabled }}</option>
+                    <option value="0" selected="selected">{{ text_disabled }}</option>
+                    
+                    {% endif %}
+                  
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
+            {% if coupon_id %}
+            <div class="tab-pane" id="tab-history">
+              <fieldset>
+                <legend>{{ text_coupon }}</legend>
+                <div id="history"></div>
+              </fieldset>
+            </div>
+            {% endif %} </div>
         </form>
       </div>
     </div>
   </div>
   <script type="text/javascript"><!--
-{% for language in languages %}
-{% if not store_2302 %}
-$('#input-description{{language.language_id}}').summernote({
-	height: 300
+$('input[name=\'product\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/product/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['product_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'product\']').val('');
+		
+		$('#coupon-product' + item['value']).remove();
+		
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');	
+	}
 });
-{% endif %}
-{% endfor %}
 
-//checkbox
-    {#$(".switcher[type='checkbox']").bootstrapSwitch({#}
-        {#'onColor': 'success',#}
-        {#'labelWidth': '50',#}
-        {#'onText': '{{text_yes}}',#}
-        {#'offText': '{{text_no}}',#}
-    {#}).on('switchChange.bootstrapSwitch', function(event, state) {#}
+$('#coupon-product').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
 
-        {#if($(this).attr('id') == 'input_news_custom'){#}
-            {#if(state){#}
-                {#$('#input_news_custom_form').removeClass('hide')#}
-            {#}else{#}
-                 {#$('#input_news_custom_form').addClass('hide')#}
-            {#}#}
-        {#}#}
-    {#});#}
+// Category
+$('input[name=\'category\']').autocomplete({
+	'source': function(request, response) {
+		$.ajax({
+			url: 'index.php?route=catalog/category/autocomplete&user_token={{ user_token }}&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',
+			success: function(json) {
+				response($.map(json, function(item) {
+					return {
+						label: item['name'],
+						value: item['category_id']
+					}
+				}));
+			}
+		});
+	},
+	'select': function(item) {
+		$('input[name=\'category\']').val('');
+		
+		$('#coupon-category' + item['value']).remove();
+		
+		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
+	}	
+});
 
-{#$('input[name=\'path\']').autocomplete({#}
-	{#'source': function(request, response) {#}
-		{#$.ajax({#}
-			{#url: '{{news_autocomplete}}&filter_title=' + encodeURIComponent(request),#}
-			{#dataType: 'json',#}
-			{#success: function(json) {#}
-				{#json.unshift({#}
-					{#news_id: 0,#}
-					{#name: '{{text_none}}'#}
-				{#});#}
-
-				{#response($.map(json, function(item) {#}
-					{#return {#}
-						{#label: item['title'],#}
-						{#value: item['news_id']#}
-					{#}#}
-				{#}));#}
-			{#}#}
-		{#});#}
-	{#},#}
-	{#'select': function(item) {#}
-		{#$('input[name=\'path\']').val(item['label']);#}
-		{#$('input[name=\'parent_id\']').val(item['value']);#}
-	{#}#}
-{#});#}
-//--></script>
-
+$('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
+	$(this).parent().remove();
+});
+//--></script> 
+  {% if coupon_id %} 
   <script type="text/javascript"><!--
-$('#language a:first').tab('show');
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+	
+	$('#history').load(this.href);
+});			
+
+$('#history').load('index.php?route=marketing/coupon/history&user_token={{ user_token }}&coupon_id={{ coupon_id }}');
+//--></script> 
+  {% endif %} 
+  <script type="text/javascript"><!--
+$('.date').datetimepicker({
+	language: '{{ datepicker }}',
+	pickTime: false
+});
 //--></script></div>
-{{footer}}
+{{ footer }}

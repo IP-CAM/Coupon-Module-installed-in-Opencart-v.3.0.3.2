@@ -135,8 +135,8 @@ class ControllerExtensionModuleIngeCouponModule extends Controller
         if ($perm == 'all') {
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/category');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/category');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/news');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/news');
+            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/coupon');
+            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/coupon');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/review');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/review');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/author');

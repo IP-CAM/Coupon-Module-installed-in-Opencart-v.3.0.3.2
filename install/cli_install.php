@@ -18,7 +18,7 @@
 //                               --username admin \
 //                               --password admin \
 //                               --email youremail@example.com \
-//                               --http_server http://localhost/opencart/
+//                               --http_server http://localhost/opencartcoupon/
 //
 
 ini_set('display_errors', 1);
@@ -71,7 +71,7 @@ function usage() {
 		'--username', 'admin',
 		'--password', 'admin',
 		'--email', 'youremail@example.com',
-		'--http_server', 'http://localhost/opencart/'
+		'--http_server', 'http://localhost/opencartcoupon/'
 	));
 	echo 'php cli_install.php install ' . $options . "\n\n";
 }

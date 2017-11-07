@@ -24,75 +24,72 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     {% endif %}
+    
     <div class="panel panel-default col-md-9">
       <div class="panel-heading">
-        <h3 class="panel-title"><i class="fa fa-list"></i> {{text_list}}</h3>
+        <h3 class="panel-title"><i class="fa fa-list"></i> {{ text_list }}</h3>
       </div>
-
       <div class="panel-body">
-        <form action="{{delete}}" method="post" enctype="multipart/form-data" id="form-category">
+        <form action="{{ delete }}" method="post" enctype="multipart/form-data" id="form-coupon">
           <div class="table-responsive">
             <table class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                  <td class="text-left">{% if sort == 'title' %}
-                    <a href="{{sort_title}}" class="{{order|lower}}">{{column_title}}</a>
+                  <td class="text-left">{% if sort == 'name' %}
+                    <a href="{{ sort_name }}" class="{{ order|lower }}">{{ column_name }}</a>
                     {% else %}
-                    <a href="{{sort_title}}">{{column_title}}</a>
-                    {% endif %}
-                  </td>
-                  <td class="text-right">{{ column_post }}</td>
-                  <td class="text-right">是否推荐</td>
-                  <td class="text-right">是否置顶</td>
-                  <td class="text-right">点击数</td>
-                  <td class="text-right">{{column_action}}</td>
+                    <a href="{{ sort_name }}">{{ column_name }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'code' %}
+                    <a href="{{ sort_code }}" class="{{ order|lower }}">{{ column_code }}</a>
+                    {% else %}
+                    <a href="{{ sort_code }}">{{ column_code }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{% if sort == 'discount' %}
+                    <a href="{{ sort_discount }}" class="{{ order|lower }}">{{ column_discount }}</a>
+                    {% else %}
+                    <a href="{{ sort_discount }}">{{ column_discount }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_start' %}
+                    <a href="{{ sort_date_start }}" class="{{ order|lower }}">{{ column_date_start }}</a>
+                    {% else %}
+                    <a href="{{ sort_date_start }}">{{ column_date_start }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'date_end' %}
+                    <a href="{{ sort_date_end }}" class="{{ order|lower }}">{{ column_date_end }}</a>
+                    {% else %}
+                    <a href="{{ sort_date_end }}">{{ column_date_end }}</a>
+                    {% endif %}</td>
+                  <td class="text-left">{% if sort == 'status' %}
+                    <a href="{{ sort_status }}" class="{{ order|lower }}">{{ column_status }}</a>
+                    {% else %}
+                    <a href="{{ sort_status }}">{{ column_status }}</a>
+                    {% endif %}</td>
+                  <td class="text-right">{{ column_action }}</td>
                 </tr>
               </thead>
               <tbody>
-                {% if all_news %}
-                {% for news in all_news %}
+                {% if coupons %}
+                {% for coupon in coupons %}
                 <tr>
-                  <td class="text-center">{% if news.news_id in selected %}
-                    <input type="checkbox" name="selected[]" value="{{news.news_id}}" checked="checked" />
+                  <td class="text-center">{% if coupon.coupon_id in selected %}
+                    <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" checked="checked" />
                     {% else %}
-                    <input type="checkbox" name="selected[]" value="{{news.news_id}}" />
-                    {% endif %}
-                  </td>
-                  <td class="text-left">{{news.post_title}}</td>
-                    {% if news.post_status == 1 %}
-                      <td class="text-right">
-                          {{ text_news_post }}
-                      </td>
-                    {% else %}
-                      <td class="text-right">
-                          {{ text_news_down }}
-                      </td>
-                    {% endif %}
-                    {% if news.recommended == 1%}
-                  <td class="text-right">推荐</td>
-                    {% else %}
-                        <td class="text-right">非推荐</td>
-                    {% endif %}
-                    {% if news.is_top == 1%}
-                      <td class="text-right">置顶</td>
-                    {% else %}
-                      <td class="text-right">非置顶</td>
-                    {% endif %}
-
-                      <td class="text-right">{{ news.post_like }}</td>
-                  {#<td class="text-right">{{category.sort_order}}</td>#}
-                  {#{% if news.is_delete == 1%}#}
-                    {#<td class="text-right">{{ text_news_status_use }}</td>#}
-                  {#{% else %}#}
-                    {#<td class="text-right">{{ text_news_status_stop }}</td>#}
-                  {#{% endif %}#}
-                  <td class="text-right"><a href="{{news['edit']}}" data-toggle="tooltip" title="{{button_edit}}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                    <input type="checkbox" name="selected[]" value="{{ coupon.coupon_id }}" />
+                    {% endif %}</td>
+                  <td class="text-left">{{ coupon.name }}</td>
+                  <td class="text-left">{{ coupon.code }}</td>
+                  <td class="text-right">{{ coupon.discount }}</td>
+                  <td class="text-left">{{ coupon.date_start }}</td>
+                  <td class="text-left">{{ coupon.date_end }}</td>
+                  <td class="text-left">{{ coupon.status }}</td>
+                  <td class="text-right"><a href="{{ coupon.edit }}" data-toggle="tooltip" title="{{ button_edit }}" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                  <td class="text-center" colspan="5">{{text_no_results}}</td>
+                  <td class="text-center" colspan="8">{{ text_no_results }}</td>
                 </tr>
                 {% endif %}
               </tbody>
@@ -100,8 +97,8 @@
           </div>
         </form>
         <div class="row">
-          <div class="col-sm-6 text-left">{{pagination}}</div>
-          <div class="col-sm-6 text-right">{{results}}</div>
+          <div class="col-sm-6 text-left">{{ pagination }}</div>
+          <div class="col-sm-6 text-right">{{ results }}</div>
         </div>
       </div>
     </div>
@@ -118,22 +115,12 @@
                      placeholder="{{ entry_name }}" id="input-name" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-filter_post_status">{{ entry_post_status }}</label>
-              <select name="filter_post_status" id="input-filter_post_status" class="form-control">
-                  {% if filter_post_status == '1' %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
-                  {% if filter_post_status == '0' %}
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                  {% else %}
-                    <option value="0">{{ text_disabled }}</option>
-                  {% endif %}
-              </select>
+              <label class="control-label" for="input-name">{{ column_code }}</label>
+              <input type="text" name="filter_name" value="{{ filter_name }}"
+                     placeholder="{{ column_code }}" id="input-name" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-filter_now_status">{{ entry_now_status }}</label>
+              <label class="control-label" for="input-filter_now_status">{{ column_status }}</label>
               <select name="filter_now_status" id="input-filter_now_status" class="form-control">
                   {% if filter_now_status == '1' %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
