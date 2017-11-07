@@ -2,6 +2,8 @@
 /config.php
 admin/config.php
 
+.vscode/
+
 !index.html
 
 download/
