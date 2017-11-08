@@ -14,6 +14,7 @@ class ModelExtensionModuleIngeCouponModule extends Model
         return $user_group_id;
     }
 
+    //添加一个新的表，记录优惠券与用户的关系  by Reson
     public function createTables()
     {
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_customer` (

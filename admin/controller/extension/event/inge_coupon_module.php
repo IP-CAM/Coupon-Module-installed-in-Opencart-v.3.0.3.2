@@ -1,5 +1,7 @@
 <?php
 class ControllerExtensionEventIngeCouponModule extends Controller {
+
+    //事件的具体运行机制还没搞懂，后续深入  by Reson
     public function view_common_column_left_before(&$route, &$data, &$output) {
 
         $this->load->language('extension/event/inge_coupon_module');
@@ -38,7 +40,6 @@ class ControllerExtensionEventIngeCouponModule extends Controller {
 
     }
 
-    //后面几个事件还没搞懂  by Reson
     public function view_setting_setting_captcha_before(&$route, &$data, &$output){
         $this->load->language('extension/event/inge_coupon_module');
 

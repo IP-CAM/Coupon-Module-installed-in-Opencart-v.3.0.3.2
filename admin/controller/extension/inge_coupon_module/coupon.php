@@ -26,33 +26,20 @@ class ControllerExtensionIngeCouponModuleCoupon extends Controller {
         $this->load->language('extension/inge_coupon_module/coupon');
         $this->document->setTitle($this->language->get('heading_title'));
 
-//        $this->model_extension_module_inge_coupon_module->updateTables();
         $this->getList();
     }
 
     public function add() {
         $this->load->language('extension/inge_coupon_module/coupon');
         $this->load->model('extension/inge_coupon_module/coupon');
-        //$this->document->addStyle('view/javascript/summernote/summernote.css');
-        //$this->document->addScript('view/javascript/summernote/summernote.js');
         $this->document->setTitle($this->language->get('heading_title'));
-/* 
-        if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-
-            $this->model_extension_inge_coupon_module_coupon->addNews($this->request->post);
-
-            $this->session->data['success'] = $this->language->get('text_success');
-
-            $url = $this->getUrl();
-
-            $this->response->redirect($this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon'));
-        } */
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_extension_inge_coupon_module_coupon->addCoupon($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
+            //url的处理对比edit中调用的getUrl函数，看能否统一，并且对比coupon原有功能. getList中目前也没有用getUrl   by Reson
 			$url = '';
 
 			if (isset($this->request->get['sort'])) {
@@ -467,7 +454,7 @@ protected function getForm() {
         }
     }
     
-    //取出优惠券关联客户
+    //取出优惠券关联客户  by Reson
     if (isset($this->request->post['coupon_customer'])) {
         $customers = $this->request->post['coupon_customer'];
     } elseif (isset($this->request->get['coupon_id'])) {
@@ -539,6 +526,7 @@ protected function getForm() {
 }
     
 	protected function validateForm() {
+        //此处是否需要修正为 extension/inge_coupon_module/ ? 需了解下Permission机制  by Reson
 		if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -571,20 +559,6 @@ protected function getForm() {
 
 		return !$this->error;
 	}
-
-    protected function validateCopyPost() {
-        if (!$this->user->hasPermission('modify', 'extension/inge_coupon_module/coupon')) {
-            $this->error['warning'] = $this->language->get('error_permission');
-        }
-
-        $this->load->model('extension/inge_coupon_module/author');
-
-        if (!$this->model_extension_inge_coupon_module_author->hasPermission('add_posts')) {
-            $this->error['warning'] = $this->language->get('error_permission');
-        }
-
-        return !$this->error;
-    }
 
     public function autocomplete() {
         $json = array();
@@ -634,33 +608,17 @@ protected function getForm() {
     protected function getUrl() {
 
         $url = '';
-
-        if (isset($this->request->get['filter_title'])) {
-            $url .= '&filter_title=' . urlencode(html_entity_decode($this->request->get['filter_title'], ENT_QUOTES, 'UTF-8'));
+        //这部分是为了在删除之后依然保留搜索项？待测试  by Reson
+        if (isset($this->request->get['filter_name'])) {
+            $url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
         }
 
-        if (isset($this->request->get['filter_tag'])) {
-            $url .= '&filter_tag=' . urlencode(html_entity_decode($this->request->get['filter_tag'], ENT_QUOTES, 'UTF-8'));
-        }
-
-        if (isset($this->request->get['filter_category'])) {
-            $url .= '&filter_category=' . urlencode(html_entity_decode($this->request->get['filter_category'], ENT_QUOTES, 'UTF-8'));
+        if (isset($this->request->get['filter_code'])) {
+            $url .= '&filter_code=' . urlencode(html_entity_decode($this->request->get['filter_code'], ENT_QUOTES, 'UTF-8'));
         }
 
         if (isset($this->request->get['filter_status'])) {
             $url .= '&filter_status=' . $this->request->get['filter_status'];
-        }
-
-        if (isset($this->request->get['filter_date_added'])) {
-            $url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-        }
-
-        if (isset($this->request->get['filter_date_modified'])) {
-            $url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-        }
-
-        if (isset($this->request->get['filter_date_published'])) {
-            $url .= '&filter_date_published=' . $this->request->get['filter_date_published'];
         }
 
         if (isset($this->request->get['order']) && $this->request->get['order'] == 'DESC') {
