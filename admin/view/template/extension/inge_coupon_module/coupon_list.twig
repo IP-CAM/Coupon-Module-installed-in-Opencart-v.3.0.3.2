@@ -3,7 +3,7 @@
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="{{add}}" data-toggle="tooltip" title="{{button_add}}" class="btn btn-primary"><i class="fa fa-plus"></i></a> 
-        <button type="button" data-toggle="tooltip" title="{{button_delete}}" class="btn btn-danger" onclick="confirm('{{text_confirm}}') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i></button>
+        <button type="button" data-toggle="tooltip" title="{{button_delete}}" class="btn btn-danger" onclick="confirm('{{text_confirm}}') ? $('#form-coupon').submit() : false;"><i class="fa fa-trash-o"></i></button>
       </div>
       <h1>{{heading_title}}</h1>
       <ul class="breadcrumb">
@@ -116,18 +116,18 @@
             </div>
             <div class="form-group">
               <label class="control-label" for="input-name">{{ column_code }}</label>
-              <input type="text" name="filter_name" value="{{ filter_name }}"
+              <input type="text" name="filter_code" value="{{ filter_code }}"
                      placeholder="{{ column_code }}" id="input-name" class="form-control"/>
             </div>
             <div class="form-group">
-              <label class="control-label" for="input-filter_now_status">{{ column_status }}</label>
-              <select name="filter_now_status" id="input-filter_now_status" class="form-control">
-                  {% if filter_now_status == '1' %}
+              <label class="control-label" for="input-filter_status">{{ column_status }}</label>
+              <select name="filter_status" id="input-filter_status" class="form-control">
+                  {% if filter_status == '1' %}
                     <option value="1" selected="selected">{{ text_enabled }}</option>
                   {% else %}
                     <option value="1">{{ text_enabled }}</option>
                   {% endif %}
-                  {% if filter_now_status == '0' %}
+                  {% if filter_status == '0' %}
                     <option value="0" selected="selected">{{ text_disabled }}</option>
                   {% else %}
                     <option value="0">{{ text_disabled }}</option>
@@ -145,6 +145,8 @@
 </div>
 <script type="text/javascript"><!--
     $('#button-filter').on('click', function () {
+        alert('Hello');
+        console.log('Hello');
         var url = '';
 
         var filter_name = $('input[name=\'filter_name\']').val();
@@ -153,19 +155,21 @@
             url += '&filter_name=' + encodeURIComponent(filter_name);
         }
 
-        var filter_post_status = $('select[name=\'filter_post_status\']').val();
+        var filter_code = $('input[name=\'filter_code\']').val();
 
-        if (filter_post_status !== '') {
-            url += '&filter_post_status=' + encodeURIComponent(filter_post_status);
+        if (filter_code !== '') {
+            url += '&filter_code=' + encodeURIComponent(filter_code);
         }
 
-        var filter_now_status = $('select[name=\'filter_now_status\']').val();
+        var filter_status = $('select[name=\'filter_status\']').val();
 
-        if (filter_now_status !== '') {
-            url += '&filter_now_status=' + encodeURIComponent(filter_now_status);
+        if (filter_status !== '') {
+            url += '&filter_status=' + encodeURIComponent(filter_status);
         }
 
-        location = 'index.php?route=extension/inge_coupon_module/news&user_token={{ token }}' + url;
+        console.log(url);
+
+        location = 'index.php?route=extension/inge_coupon_module/coupon&user_token={{ token }}' + url;
     });
     //--></script>
 <script type="text/javascript"><!--

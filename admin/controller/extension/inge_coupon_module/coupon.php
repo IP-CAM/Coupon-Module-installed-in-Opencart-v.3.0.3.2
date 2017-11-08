@@ -118,6 +118,24 @@ class ControllerExtensionIngeCouponModuleCoupon extends Controller {
     }
 
     protected function getList() {
+        if (isset($this->request->get['filter_name'])) {
+            $filter_name = $this->request->get['filter_name'];
+        } else {
+            $filter_name = null;
+        }
+
+        if (isset($this->request->get['filter_code'])) {
+            $filter_code = $this->request->get['filter_code'];
+        } else {
+            $filter_code = 0;
+        }
+
+        if (isset($this->request->get['filter_status'])) {
+            $filter_status = $this->request->get['filter_status'];
+        } else {
+            $filter_status = 0;
+        }
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -169,6 +187,9 @@ class ControllerExtensionIngeCouponModuleCoupon extends Controller {
 		$data['coupons'] = array();
 
 		$filter_data = array(
+            'filter_name' => $filter_name,
+            'filter_code' => $filter_code,
+            'filter_status' => $filter_status,
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
