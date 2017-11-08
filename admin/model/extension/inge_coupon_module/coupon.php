@@ -80,8 +80,20 @@ class ModelExtensionIngeCouponModuleCoupon extends Model {
     }
 
     public function getCoupons($data = array()) {
-        $sql = "SELECT coupon_id, name, code, discount, date_start, date_end, status FROM " . DB_PREFIX . "coupon";
-
+        $sql = "SELECT coupon_id, name, code, discount, date_start, date_end, status FROM " . DB_PREFIX . "coupon where 1 = 1 ";
+        
+        if (!empty($data['filter_name'])) {
+            $sql .= " AND name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+        }
+		
+		if (!empty($data['filter_code'])) {
+            $sql .= " AND code  LIKE '" . $this->db->escape($data['filter_code']) . "%'";
+        }
+        
+        if (isset($data['filter_status']) && $data['filter_status'] !== '') {
+            $sql .= " AND status = '" . (int)$data['filter_status'] . "'";
+        }
+		
         $sort_data = array(
             'name',
             'code',

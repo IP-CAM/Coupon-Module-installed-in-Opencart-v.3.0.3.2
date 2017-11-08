@@ -118,22 +118,23 @@ class ControllerExtensionIngeCouponModuleCoupon extends Controller {
     }
 
     protected function getList() {
+        
         if (isset($this->request->get['filter_name'])) {
             $filter_name = $this->request->get['filter_name'];
         } else {
-            $filter_name = null;
+            $filter_name = '';
         }
 
         if (isset($this->request->get['filter_code'])) {
             $filter_code = $this->request->get['filter_code'];
         } else {
-            $filter_code = 0;
+            $filter_code = '';
         }
 
         if (isset($this->request->get['filter_status'])) {
             $filter_status = $this->request->get['filter_status'];
         } else {
-            $filter_status = 0;
+            $filter_status ='';
         }
 
 		if (isset($this->request->get['sort'])) {
@@ -211,8 +212,10 @@ class ControllerExtensionIngeCouponModuleCoupon extends Controller {
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
                 'edit' => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon/edit','&coupon_id=' . $result['coupon_id'] . $url)
 			);
-		}
-
+        }
+        
+        $data['user_token'] = $this->session->data['user_token'];
+        
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

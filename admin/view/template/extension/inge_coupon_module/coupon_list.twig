@@ -122,16 +122,17 @@
             <div class="form-group">
               <label class="control-label" for="input-filter_status">{{ column_status }}</label>
               <select name="filter_status" id="input-filter_status" class="form-control">
-                  {% if filter_status == '1' %}
-                    <option value="1" selected="selected">{{ text_enabled }}</option>
-                  {% else %}
-                    <option value="1">{{ text_enabled }}</option>
-                  {% endif %}
-                  {% if filter_status == '0' %}
-                    <option value="0" selected="selected">{{ text_disabled }}</option>
-                  {% else %}
-                    <option value="0">{{ text_disabled }}</option>
-                  {% endif %}
+                <option value=""></option>
+                {% if filter_status == '1' %}
+                  <option value="1" selected="selected">{{ text_enabled }}</option>
+                {% else %}
+                  <option value="1">{{ text_enabled }}</option>
+                {% endif %}
+                {% if filter_status == '0' %}
+                  <option value="0" selected="selected">{{ text_disabled }}</option>
+                {% else %}
+                  <option value="0">{{ text_disabled }}</option>
+                {% endif %}
               </select>
             </div>
             <div class="form-group text-right">
@@ -145,8 +146,6 @@
 </div>
 <script type="text/javascript"><!--
     $('#button-filter').on('click', function () {
-        alert('Hello');
-        console.log('Hello');
         var url = '';
 
         var filter_name = $('input[name=\'filter_name\']').val();
@@ -167,9 +166,7 @@
             url += '&filter_status=' + encodeURIComponent(filter_status);
         }
 
-        console.log(url);
-
-        location = 'index.php?route=extension/inge_coupon_module/coupon&user_token={{ token }}' + url;
+        location = 'index.php?route=extension/inge_coupon_module/coupon&user_token={{ user_token }}'+ url;
     });
     //--></script>
 <script type="text/javascript"><!--

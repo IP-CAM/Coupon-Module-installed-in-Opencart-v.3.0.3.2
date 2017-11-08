@@ -4,7 +4,7 @@ class Memcached {
 	private $expire;
 	private $memcached;
 
-	const CACHEDUMP_LIMIT = 9999;
+	const CACHEDUMP_LIMIT = 1;
 
 	public function __construct($expire) {
 		$this->expire = $expire;
