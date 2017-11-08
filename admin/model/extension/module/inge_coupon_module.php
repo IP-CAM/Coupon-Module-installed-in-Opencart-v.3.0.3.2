@@ -16,30 +16,6 @@ class ModelExtensionModuleIngeCouponModule extends Model
 
     public function createTables()
     {
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon` (
-          `news_id` int(11) NOT NULL AUTO_INCREMENT,
-          `category_id` int(11) NOT NULL COMMENT '分类id',
-          `post_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1:文章 2:页面',
-          `post_format` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1:html 2:md',
-          `user_id` int(11) NOT NULL COMMENT '发布作者的id',
-          `post_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1:已发布 0:未发布',
-          `comment_status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1: 允许评论 0: 不允许',
-          `is_top` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否置顶  1：置顶 0: 不置顶',
-          `is_delete` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否删除 1:未删除 0:删除',
-          `recommended` tinyint(4) NOT NULL DEFAULT '1' COMMENT '是否推荐 1:推荐 0:不推荐',
-          `post_hits` int(11) NOT NULL DEFAULT '0' COMMENT '查看数',
-          `post_like` int(11) NOT NULL DEFAULT '0' COMMENT '点击数',
-          `comment_count` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
-          `date_added` datetime NOT NULL COMMENT '创建时间',
-          `date_modified` datetime DEFAULT NULL COMMENT '更新时间',
-          `date_published` datetime DEFAULT NULL COMMENT '发布时间',
-          `date_delete` datetime DEFAULT NULL COMMENT '删除时间',
-          `post_source` varchar(255) DEFAULT NULL COMMENT '转载的文章来源',
-          `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-          PRIMARY KEY (`news_id`)
-        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        ");
-
         $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_customer` (
           `coupon_customer_id` int(11) NOT NULL AUTO_INCREMENT,
           `coupon_id` int(11) NOT NULL,

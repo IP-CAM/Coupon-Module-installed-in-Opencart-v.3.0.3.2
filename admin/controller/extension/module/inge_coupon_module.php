@@ -16,28 +16,13 @@ class ControllerExtensionModuleIngeCouponModule extends Controller
         $this->load->language($this->route);
         $this->load->model($this->route);
         $this->load->model('setting/setting');
-        $this->load->model('extension/inge_coupon_module/category');
         $this->load->model('extension/ws_opencart_patch/load');
-//
-//        $this->d_shopunity = (file_exists(DIR_SYSTEM.'library/ws_shopunity/extension/ws_shopunity.json'));
-//        $this->ws_opencart_patch = (file_exists(DIR_SYSTEM.'library/ws_shopunity/extension/ws_opencart_patch.json'));
-//        if($this->ws_opencart_patch){
-//            $this->load->model('extension/ws_opencart_patch/url');
-//            $this->load->model('extension/ws_opencart_patch/user');
-//            $this->load->model('extension/ws_opencart_patch/store');
-//        }
-//        $this->ws_twig_manager = (file_exists(DIR_SYSTEM.'library/ws_shopunity/extension/ws_twig_manager.json'));
-//        $this->ws_event_manager = (file_exists(DIR_SYSTEM.'library/ws_shopunity/extension/ws_event_manager.json'));
-//        $this->extension = json_decode(file_get_contents(DIR_SYSTEM.'library/ws_shopunity/extension/ws_blog_module.json'), true);
-//
+
         if (isset($this->request->get['store_id'])) {
             $this->store_id = $this->request->get['store_id'];
         }
-//
-//        // give some permissions
+//      give some permissions
         $this->permission_handler('main');
-
-//        $this->config_file = $this->model_extension_module_inge_coupon_module->getConfigFile($this->codename, $this->sub_versions);
     }
 
     public function index()
@@ -50,7 +35,6 @@ class ControllerExtensionModuleIngeCouponModule extends Controller
         $this->load->model('extension/module/inge_coupon_module');
 
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-//            $this->model_setting_setting->editSetting('captcha_basic', $this->request->post);
             $this->model_extension_module_inge_coupon_module->editSetting($this->request->post);
 
             $this->session->data['success'] = $this->language->get('text_success');
@@ -116,11 +100,8 @@ class ControllerExtensionModuleIngeCouponModule extends Controller
         $this->load->model('extension/module/inge_coupon_module');
 
         $this->addEvent();
-//        $this->load->model('extension/module/ws_blog_module');
+        
         $this->model_extension_module_inge_coupon_module->createTables();
-
-//        $this->load->model('extension/ws_shopunity/mbooth');
-//        $this->model_extension_ws_shopunity_mbooth->installDependencies($this->codename);
 
         $this->permission_handler('all');
     }
@@ -133,16 +114,8 @@ class ControllerExtensionModuleIngeCouponModule extends Controller
         $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename);
 
         if ($perm == 'all') {
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/category');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/category');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/coupon');
             $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/coupon');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/review');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/review');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/author');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/author');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'access', 'extension/'.$this->codename.'/author_group');
-            $this->model_user_user_group->addPermission($this->model_extension_module_inge_coupon_module->getGroupId(), 'modify', 'extension/'.$this->codename.'/author_group');
         }
     }
 

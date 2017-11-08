@@ -7,41 +7,20 @@ class ControllerExtensionEventIngeCouponModule extends Controller {
         $inge_coupon_module = array();
         $this->load->model('extension/ws_opencart_patch/url');
         $inge_coupon_module[] = array(
-            'name'     => $this->language->get('text_news_post'),
+            'name'     => $this->language->get('text_coupon_list'),
             'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon'),
             'children' => array()
         );
         $inge_coupon_module[] = array(
-            'name'     => $this->language->get('text_news_category'),
-            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/category'),
+            'name'     => $this->language->get('text_coupon_user'),
+            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon'),
             'children' => array()
         );
-//        $inge_coupon_module[] = array(
-//            'name'     => $this->language->get('text_news_review'),
-//            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/review'),
-//            'children' => array()
-//        );
-//        $inge_coupon_module[] = array(
-//            'name'     => $this->language->get('text_news_author'),
-//            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/author'),
-//            'children' => array()
-//        );
-//        $inge_coupon_module[] = array(
-//            'name'     => $this->language->get('text_news_author_group'),
-//            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/author_group'),
-//            'children' => array()
-//        );
-//
-//        $inge_coupon_module[] = array(
-//            'name'     => $this->language->get('text_news_settings'),
-//            'href'     => $this->model_extension_ws_opencart_patch_url->link('extension/module/inge_coupon_module'),
-//            'children' => array()
-//        );
 
         $insert['menus'][] = array(
             'id'       => 'menu-news',
             'icon'     => 'fa fa-newspaper-o fa-fw',
-            'name'     => $this->language->get('text_news'),
+            'name'     => $this->language->get('text_coupon'),
             'href'     => '',
             'children' => $inge_coupon_module
         );
@@ -59,12 +38,13 @@ class ControllerExtensionEventIngeCouponModule extends Controller {
 
     }
 
+    //后面几个事件还没搞懂  by Reson
     public function view_setting_setting_captcha_before(&$route, &$data, &$output){
         $this->load->language('extension/event/inge_coupon_module');
 
         $data['captcha_pages'][] = array(
-            'text'  => $this->language->get('text_news'),
-            'value' => 'news_module'
+            'text'  => $this->language->get('text_coupon'),
+            'value' => 'inge_coupon_module'
         );
 
     }
