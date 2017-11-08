@@ -17,6 +17,14 @@ class ModelExtensionIngeCouponModuleCoupon extends Model {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
             }
         }
+        
+        
+        //保存新建的优惠券关联客户信息  by Reson
+        if (isset($data['coupon_customer'])) {
+            foreach ($data['coupon_customer'] as $customer_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "inge_coupon_customer SET coupon_id = '" . (int)$coupon_id . "', customer_id = '" . (int)$customer_id . "'");
+            }
+        }
 
         return $coupon_id;
     }
@@ -39,12 +47,23 @@ class ModelExtensionIngeCouponModuleCoupon extends Model {
                 $this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
             }
         }
+        
+        //保存编辑的优惠券关联客户信息  by Reson
+        $this->db->query("DELETE FROM " . DB_PREFIX . "inge_coupon_customer WHERE coupon_id = '" . (int)$coupon_id . "'");
+        
+        if (isset($data['coupon_customer'])) {
+            foreach ($data['coupon_customer'] as $customer_id) {
+                $this->db->query("INSERT INTO " . DB_PREFIX . "inge_coupon_customer SET coupon_id = '" . (int)$coupon_id . "', customer_id = '" . (int)$customer_id . "'");
+            }
+        }
     }
 
     public function deleteCoupon($coupon_id) {
         $this->db->query("DELETE FROM " . DB_PREFIX . "coupon WHERE coupon_id = '" . (int)$coupon_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "coupon_product WHERE coupon_id = '" . (int)$coupon_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "coupon_category WHERE coupon_id = '" . (int)$coupon_id . "'");
+        //删除优惠券关联客户信息  by Reson
+        $this->db->query("DELETE FROM " . DB_PREFIX . "inge_coupon_customer WHERE coupon_id = '" . (int)$coupon_id . "'");
         $this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");
     }
 
@@ -123,6 +142,19 @@ class ModelExtensionIngeCouponModuleCoupon extends Model {
         }
 
         return $coupon_category_data;
+    }
+    
+    //获取优惠券关联客户  by Reson
+    public function getCouponCustomers($coupon_id) {
+        $coupon_customer_data = array();
+
+        $query = $this->db->query("SELECT * FROM " . DB_PREFIX . "inge_coupon_customer WHERE coupon_id = '" . (int)$coupon_id . "'");
+
+        foreach ($query->rows as $result) {
+            $coupon_customer_data[] = $result['customer_id'];
+        }
+
+        return $coupon_customer_data;
     }
 
     public function getTotalCoupons() {

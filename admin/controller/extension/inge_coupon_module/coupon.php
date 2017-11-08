@@ -332,7 +332,7 @@ protected function getForm() {
     if (!isset($this->request->get['coupon_id'])) {
         $data['action'] = $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon/add', $url);
     } else {
-        $data['action'] = $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon/edit', '&news_id=' . $this->request->get['news_id'] . $url);
+        $data['action'] = $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon/edit', '&coupon_id=' . $this->request->get['coupon_id'] . $url);
     }
 
     $data['cancel'] = $this->model_extension_ws_opencart_patch_url->link('extension/inge_coupon_module/coupon', $url);
@@ -443,12 +443,11 @@ protected function getForm() {
         }
     }
     
-    //关联客户
-    
+    //取出优惠券关联客户
     if (isset($this->request->post['coupon_customer'])) {
         $customers = $this->request->post['coupon_customer'];
     } elseif (isset($this->request->get['coupon_id'])) {
-        $customers = $this->model_extension_inge_coupon_module_coupon->getCouponCategories($this->request->get['coupon_id']);
+        $customers = $this->model_extension_inge_coupon_module_coupon->getCouponCustomers($this->request->get['coupon_id']);
     } else {
         $customers = array();
     }
@@ -463,7 +462,7 @@ protected function getForm() {
         if ($customer_info) {
             $data['coupon_customer'][] = array(
                 'customer_id' => $customer_info['customer_id'],
-                'name'        => ($customer_info['path'] ? $customer_info['path'] . ' &gt; ' : '') . $customer_info['name']
+                'name'        => ($customer_info['firstname'] ? $customer_info['firstname'] . ' ' : '') .  ($customer_info['lastname'] ? $customer_info['lastname']  : '')
             );
         }
     }

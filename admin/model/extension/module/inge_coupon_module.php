@@ -40,41 +40,14 @@ class ModelExtensionModuleIngeCouponModule extends Model
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
         ");
 
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_category` (
-          `news_category_id` int(11) NOT NULL AUTO_INCREMENT,
-          `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT '父id',
-          `sort_order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
-          `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '是否使用该分类 1:使用 0:不使用',
-          `is_nav` tinyint(3) NOT NULL DEFAULT '1' COMMENT '是否导航栏展示 1:展示 0:不展示',
-          `image` varchar(128) DEFAULT NULL COMMENT '分类的图片',
-          `image_thumb` varchar(128) DEFAULT NULL COMMENT '分类的缩略图',
-          PRIMARY KEY (`news_category_id`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_category_description` (
-          `news_category_description_id` int(11) NOT NULL AUTO_INCREMENT,
-          `news_category_id` int(11) NOT NULL COMMENT '分类id',
-          `language_id` tinyint(4) NOT NULL DEFAULT '1' COMMENT '语言id',
-          `title` varchar(64) NOT NULL COMMENT '分类名',
-          `description` varchar(255) NOT NULL COMMENT '分类描述',
-          PRIMARY KEY (`news_category_description_id`),
-          INDEX (`news_category_id`)
-        ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;"
-        );
-
-        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_description` (
-          `news_description_id` int(11) NOT NULL AUTO_INCREMENT,
-          `news_id` int(11) NOT NULL COMMENT '新闻id',
-          `language_id` tinyint(4) NOT NULL DEFAULT '1' COMMENT '语言',
-          `post_title` varchar(128) NOT NULL COMMENT 'post标题',
-          `post_keywords` varchar(255) DEFAULT NULL COMMENT 'seo keywords',
-          `post_excerpt` varchar(255) DEFAULT NULL COMMENT 'post 摘要',
-          `post_content` text NOT NULL COMMENT '内容',
-          PRIMARY KEY (`news_description_id`),
-          INDEX (`news_id`)
+        $this->db->query("CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "inge_coupon_customer` (
+          `coupon_customer_id` int(11) NOT NULL AUTO_INCREMENT,
+          `coupon_id` int(11) NOT NULL,
+          `customer_id` int(11) NOT NULL,
+          PRIMARY KEY (`coupon_customer_id`)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        ");
+          ");
+        
     }
 
     public function getConfigFile($id, $sub_versions)
